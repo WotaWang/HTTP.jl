@@ -59,6 +59,7 @@ function request(::Type{ConnectionPoolLayer{Next}}, url::URI, req, body;
                  socket_type::Type=TCPSocket,
                  reuse_limit::Int=ConnectionPool.nolimit, kw...) where Next
 
+    println("ConnectionPoolLayer start")
     if proxy !== nothing
         target_url = url
         url = URI(proxy)
@@ -85,6 +86,7 @@ function request(::Type{ConnectionPoolLayer{Next}}, url::URI, req, body;
             return tunnel_request(Next, io, target_url, req, body; kw...)
         end
 
+        println("ConnectionPoolLayer end")
         return request(Next, io, req, body; kw...)
 
     catch e
