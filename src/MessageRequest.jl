@@ -25,6 +25,7 @@ function request(::Type{MessageLayer{Next}},
                  target=resource(url),
                  parent=nothing, iofunction=nothing, kw...) where Next
 
+    println("MessageLayer start")
     defaultheader!(headers, "Host" => url.host)
     if USER_AGENT[] !== nothing
         defaultheader!(headers, "User-Agent" => USER_AGENT[])
@@ -48,6 +49,7 @@ function request(::Type{MessageLayer{Next}},
     req = Request(method, target, headers, bodybytes(body);
                   parent=parent, version=http_version)
 
+    println("MessageLayer end")
     return request(Next, url, req, body; iofunction=iofunction, kw...)
 end
 
