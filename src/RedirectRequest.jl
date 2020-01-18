@@ -19,6 +19,7 @@ function request(::Type{RedirectLayer{Next}},
                  method::String, url::URI, headers, body;
                  redirect_limit=3, forwardheaders=true, kw...) where Next
     count = 0
+    println("RedirectLayer start")
     while true
     
         res = request(Next, method, url, headers, body; kw...)
@@ -26,6 +27,7 @@ function request(::Type{RedirectLayer{Next}},
         if (count == redirect_limit
         ||  !isredirect(res)
         ||  (location = header(res, "Location")) == "")
+            println("RedirectLayer end")
             return res
         end
             
